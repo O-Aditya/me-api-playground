@@ -95,7 +95,7 @@ process.on('SIGTERM', async () => {
 // Start server
 const PORT = config.port;
 
-app.listen(PORT, () => {
+app.listen(Number(PORT), '0.0.0.0', () => {
     logger.info(`🚀 Server running on port ${PORT}`);
     logger.info(`📝 Environment: ${config.nodeEnv}`);
     logger.info(`🌐 CORS enabled for: ${config.cors.origin}`);
