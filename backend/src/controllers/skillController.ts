@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import prisma from '../config/database';
 
 // Get all skills
-export const getSkills = async (req: Request, res: Response, next: NextFunction) => {
+export const getSkills = async (_req: Request, res: Response, next: NextFunction) => {
     try {
         const skills = await prisma.skill.findMany({
             orderBy: { yearsExperience: 'desc' },
@@ -22,7 +22,7 @@ export const getSkills = async (req: Request, res: Response, next: NextFunction)
 };
 
 // Get top skills (most frequently used across projects)
-export const getTopSkills = async (req: Request, res: Response, next: NextFunction) => {
+export const getTopSkills = async (_req: Request, res: Response, next: NextFunction) => {
     try {
         // Get all projects and count skill usage
         const projects = await prisma.project.findMany({

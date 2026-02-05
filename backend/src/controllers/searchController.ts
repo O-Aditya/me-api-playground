@@ -7,7 +7,7 @@ export const search = async (req: Request, res: Response, next: NextFunction) =>
         const { q } = req.query;
 
         if (!q || typeof q !== 'string') {
-            return res.json({
+            res.json({
                 success: true,
                 data: {
                     projects: [],
@@ -15,6 +15,7 @@ export const search = async (req: Request, res: Response, next: NextFunction) =>
                     work: [],
                 },
             });
+            return;
         }
 
         const searchTerm = q.toLowerCase();

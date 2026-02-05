@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { validationError } from './errorHandler';
 
 export const validateRequest = (schema: Joi.ObjectSchema) => {
-    return (req: Request, res: Response, next: NextFunction) => {
+    return (req: Request, _res: Response, next: NextFunction) => {
         const { error, value } = schema.validate(req.body, {
             abortEarly: false,
             stripUnknown: true,

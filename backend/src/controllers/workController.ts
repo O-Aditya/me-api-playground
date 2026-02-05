@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import prisma from '../config/database';
 
 // Get work experience
-export const getWorkExperience = async (req: Request, res: Response, next: NextFunction) => {
+export const getWorkExperience = async (_req: Request, res: Response, next: NextFunction) => {
     try {
         const workExperience = await prisma.workExperience.findMany({
             orderBy: { startDate: 'desc' },

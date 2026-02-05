@@ -42,7 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Request logging
-app.use((req, res, next) => {
+app.use((req, _res, next) => {
     logger.info(`${req.method} ${req.path}`);
     next();
 });
@@ -51,7 +51,7 @@ app.use((req, res, next) => {
 app.use('/api', apiRoutes);
 
 // Root endpoint
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
     res.json({
         name: 'Me-API Playground',
         version: '1.0.0',
@@ -72,7 +72,7 @@ app.get('/', (req, res) => {
 app.use(errorHandler);
 
 // 404 handler
-app.use((req, res) => {
+app.use((_req, res) => {
     res.status(404).json({
         success: false,
         error: {
