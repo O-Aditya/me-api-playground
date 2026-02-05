@@ -76,6 +76,19 @@ export default function Home() {
           email={profile.email}
         />
 
+        {/* Skills Section */}
+        <section className="mb-16">
+          <h2 className="text-2xl font-semibold mb-8">skills</h2>
+          <div className="flex flex-wrap gap-2">
+            {profile.skills.map((skill) => (
+              <SkillTag key={skill.name} skill={skill} />
+            ))}
+          </div>
+        </section>
+
+        {/* Full-width separator */}
+        <hr className="border-border my-16 -mx-6" />
+
         {/* Projects Section */}
         <section className="mb-16">
           <div className="flex items-center justify-between mb-8">
@@ -98,18 +111,7 @@ export default function Home() {
         {/* Full-width separator */}
         <hr className="border-border my-16 -mx-6" />
 
-        {/* Skills Section */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-semibold mb-8">skills</h2>
-          <div className="flex flex-wrap gap-2">
-            {profile.skills.map((skill) => (
-              <SkillTag key={skill.name} skill={skill} />
-            ))}
-          </div>
-        </section>
 
-        {/* Full-width separator */}
-        <hr className="border-border my-16 -mx-6" />
 
         {/* Work Experience Section */}
         {profile.work.length > 0 && (
