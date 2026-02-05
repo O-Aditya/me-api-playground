@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id            Int              @id @default(autoincrement())
+  name          String           @db.VarChar(255)
+  email         String           @unique @db.VarChar(255)
+  education     String?          @db.Text
+  githubUrl     String?          @map("github_url") @db.VarChar(500)
+  linkedinUrl   String?          @map("linkedin_url") @db.VarChar(500)
+  portfolioUrl  String?          @map("portfolio_url") @db.VarChar(500)
+  avatarUrl     String?          @map("avatar_url") @db.VarChar(500)
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime         @updatedAt @map("updated_at")
+  
+  skills        Skill[]
+  projects      Project[]
+  workExperience WorkExperience[]
+
+  @@map("profile")
+}
+
+model Skill {
+  id              Int      @id @default(autoincrement())
+  profileId       Int      @map("profile_id")
+  name            String   @db.VarChar(100)
+  proficiency     String?  @db.VarChar(50)
+  yearsExperience Int?     @map("years_experience")
+  
+  profile         Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, name])
+  @@index([profileId])
+  @@index([name])
+  @@map("skills")
+}
+
+model Project {
+  id          Int       @id @default(autoincrement())
+  profileId   Int       @map("profile_id")
+  title       String    @db.VarChar(255)
+  description String?   @db.Text
+  link        String?   @db.VarChar(500)
+  skillsUsed  Json?     @map("skills_used")
+  startDate   DateTime? @map("start_date") @db.Date
+  endDate     DateTime? @map("end_date") @db.Date
+  createdAt   DateTime  @default(now()) @map("created_at")
+  
+  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@map("projects")
+}
+
+model WorkExperience {
+  id          Int       @id @default(autoincrement())
+  profileId   Int       @map("profile_id")
+  company     String    @db.VarChar(255)
+  role        String    @db.VarChar(255)
+  startDate   DateTime  @map("start_date") @db.Date
+  endDate     DateTime? @map("end_date") @db.Date
+  description String?   @db.Text
+  isCurrent   Boolean   @default(false) @map("is_current")
+  
+  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@map("work_experience")
+}
